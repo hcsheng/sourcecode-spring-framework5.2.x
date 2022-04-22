@@ -131,7 +131,7 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 	@SuppressWarnings("unchecked")
 	@Nullable
 	protected static AspectJAnnotation<?> findAspectJAnnotationOnMethod(Method method) {
-		//ASPECTJ_ANNOTATION_CLASSES 包含 Pointcut.class, Around.class, Before.class, After.class, AfterReturning.class, AfterThrowing.class
+		//ASPECTJ_ANNOTATION_CLASSES  Pointcut.class, Around.class, Before.class, After.class, AfterReturning.class, AfterThrowing.class
 		for (Class<?> clazz : ASPECTJ_ANNOTATION_CLASSES) {
 			AspectJAnnotation<?> foundAnnotation = findAnnotation(method, (Class<Annotation>) clazz);
 			if (foundAnnotation != null) {
@@ -145,7 +145,7 @@ public abstract class AbstractAspectJAdvisorFactory implements AspectJAdvisorFac
 	private static <A extends Annotation> AspectJAnnotation<A> findAnnotation(Method method, Class<A> toLookFor) {
 		A result = AnnotationUtils.findAnnotation(method, toLookFor);
 		if (result != null) {
-			// 把注解里面的信息解析出来，封装成AspectJAnnotation对象
+			// 鎶婃敞瑙ｉ噷闈㈢殑淇℃伅瑙ｆ瀽鍑烘潵锛屽皝瑁呮垚AspectJAnnotation瀵硅薄
 			return new AspectJAnnotation<>(result);
 		}
 		else {

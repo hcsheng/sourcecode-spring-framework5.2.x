@@ -74,7 +74,7 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 	@Nullable
 	protected Object[] getAdvicesAndAdvisorsForBean(
 			Class<?> beanClass, String beanName, @Nullable TargetSource targetSource) {
-		//æ‰¾åˆ°åˆæ ¼çš„åˆ‡é¢ é‡è¦ç¨‹åº¦ 5é¢—æ˜Ÿ
+		//ÕÒµ½ºÏ¸ñµÄÇĞÃæ ÖØÒª³Ì¶È 5¿ÅĞÇ
 		List<Advisor> advisors = findEligibleAdvisors(beanClass, beanName);
 		if (advisors.isEmpty()) {
 			return DO_NOT_PROXY;
@@ -93,14 +93,14 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 	 * @see #extendAdvisors
 	 */
 	protected List<Advisor> findEligibleAdvisors(Class<?> beanClass, String beanName) {
-		//æ‰¾åˆ°å€™é€‰çš„åˆ‡é¢ï¼Œå°±æ˜¯ä¸€ä¸ªå¯»æ‰¾æœ‰@Aspectjæ³¨è§£çš„è¿‡ç¨‹ï¼ŒæŠŠå·¥ç¨‹ä¸­æ‰€æœ‰è¿™ä¸ªæ³¨è§£çš„ç±»å°è£…æˆAdvisorè¿”å›
-		// åŒ…å«ä¸¤éƒ¨åˆ†ï¼šå­ç±» å’Œ å½“å‰ç±»  é‡è¦ç¨‹åº¦ 5é¢—æ˜Ÿ
+		//ÕÒµ½ºòÑ¡µÄÇĞÃæ£¬¾ÍÊÇÒ»¸öÑ°ÕÒÓĞ@Aspectj×¢½âµÄ¹ı³Ì£¬°Ñ¹¤³ÌÖĞËùÓĞÕâ¸ö×¢½âµÄÀà·â×°³ÉAdvisor·µ»Ø
+		// °üº¬Á½²¿·Ö£º×ÓÀà ºÍ µ±Ç°Àà  ÖØÒª³Ì¶È 5¿ÅĞÇ
 		List<Advisor> candidateAdvisors = findCandidateAdvisors();
-		//åˆ¤æ–­å€™é€‰çš„åˆ‡é¢æ˜¯å¦ä½œç”¨åœ¨å½“å‰beanä¸Šé¢ï¼Œ é‡è¦ç¨‹åº¦ 5é¢—æ˜Ÿ
+		//ÅĞ¶ÏºòÑ¡µÄÇĞÃæÊÇ·ñ×÷ÓÃÔÚµ±Ç°beanÉÏÃæ£¬ ÖØÒª³Ì¶È 5¿ÅĞÇ
 		List<Advisor> eligibleAdvisors = findAdvisorsThatCanApply(candidateAdvisors, beanClass, beanName);
 		extendAdvisors(eligibleAdvisors);
 		if (!eligibleAdvisors.isEmpty()) {
-			//æœ‰åŒ¹é…ä¸Šçš„åˆ‡é¢  å¯¹æœ‰ @Order @Priority æ³¨è§£çš„ è¿›è¡Œæ’åº  todo
+			//ÓĞÆ¥ÅäÉÏµÄÇĞÃæ  ¶ÔÓĞ @Order @Priority ×¢½âµÄ ½øĞĞÅÅĞò  todo
 			eligibleAdvisors = sortAdvisors(eligibleAdvisors);
 		}
 		return eligibleAdvisors;
@@ -129,7 +129,7 @@ public abstract class AbstractAdvisorAutoProxyCreator extends AbstractAutoProxyC
 
 		ProxyCreationContext.setCurrentProxiedBeanName(beanName);
 		try {
-			//åŒ¹é…å½“å‰ç±»æ˜¯å¦åœ¨è¿™äº›åˆ‡é¢çš„pointcutä¸­ï¼Œ   matchåŒ¹é…çš„è¿‡ç¨‹
+			//Æ¥Åäµ±Ç°ÀàÊÇ·ñÔÚÕâĞ©ÇĞÃæµÄpointcutÖĞ£¬   matchÆ¥ÅäµÄ¹ı³Ì
 			return AopUtils.findAdvisorsThatCanApply(candidateAdvisors, beanClass);
 		}
 		finally {

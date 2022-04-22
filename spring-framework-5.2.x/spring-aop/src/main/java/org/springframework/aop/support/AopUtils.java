@@ -223,7 +223,7 @@ public abstract class AopUtils {
 	 */
 	public static boolean canApply(Pointcut pc, Class<?> targetClass, boolean hasIntroductions) {
 		Assert.notNull(pc, "Pointcut must not be null");
-		//pcå°±æ˜¯ pointcut è°ƒç”¨classFilterçš„matchæ–¹æ³• åˆ¤æ–­ç±»æ˜¯å¦åŒ¹é…   è¿›å…¥ AspectJExpressionPointcut çš„ matchesæ–¹æ³•
+		//pc¾ÍÊÇ pointcut µ÷ÓÃclassFilterµÄmatch·½·¨ ÅĞ¶ÏÀàÊÇ·ñÆ¥Åä   ½øÈë AspectJExpressionPointcut µÄ matches·½·¨
 		if (!pc.getClassFilter().matches(targetClass)) {
 			return false;
 		}
@@ -309,13 +309,13 @@ public abstract class AopUtils {
 		}
 		List<Advisor> eligibleAdvisors = new ArrayList<>();
 		for (Advisor candidate : candidateAdvisors) {
-			// å¦‚æœæ˜¯ å¼•ä»‹åˆ‡é¢å¹¶ä¸”åŒ¹é…   é‡è¦ç¨‹åº¦ 1é¢—æ˜Ÿ
+			// Èç¹ûÊÇ Òı½éÇĞÃæ²¢ÇÒÆ¥Åä   ÖØÒª³Ì¶È 1¿ÅĞÇ
 			if (candidate instanceof IntroductionAdvisor && canApply(candidate, clazz)) {
 				eligibleAdvisors.add(candidate);
 			}
 		}
 		boolean hasIntroductions = !eligibleAdvisors.isEmpty();
-		//è°ƒç”¨ pointcut ä¸­ classFilter  å’Œ methidMatcher çš„ match æ–¹æ³•çš„è¿‡ç¨‹
+		//µ÷ÓÃ pointcut ÖĞ classFilter  ºÍ methidMatcher µÄ match ·½·¨µÄ¹ı³Ì
 		for (Advisor candidate : candidateAdvisors) {
 			if (candidate instanceof IntroductionAdvisor) {
 				// already processed

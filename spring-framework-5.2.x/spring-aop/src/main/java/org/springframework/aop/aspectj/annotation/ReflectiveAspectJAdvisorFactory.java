@@ -117,20 +117,20 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 
 	@Override
 	public List<Advisor> getAdvisors(MetadataAwareAspectInstanceFactory aspectInstanceFactory) {
-		//ä»å·¥å‚ä¸­è·å–æœ‰@Aspectæ³¨è§£ç±»class
+		//´Ó¹¤³§ÖĞ»ñÈ¡ÓĞ@Aspect×¢½âÀàclass
 		Class<?> aspectClass = aspectInstanceFactory.getAspectMetadata().getAspectClass();
-		//ä»å·¥å‚ä¸­è·å–æœ‰@Aspectæ³¨è§£ç±»çš„åç§°
+		//´Ó¹¤³§ÖĞ»ñÈ¡ÓĞ@Aspect×¢½âÀàµÄÃû³Æ
 		String aspectName = aspectInstanceFactory.getAspectMetadata().getAspectName();
 		validate(aspectClass);
 
 		// We need to wrap the MetadataAwareAspectInstanceFactory with a decorator
 		// so that it will only instantiate once.
-		//åˆ›å»ºå·¥å‚è£…é¥°ç±»  è·å–å®ä¾‹åªè·å–ä¸€æ¬¡
+		//´´½¨¹¤³§×°ÊÎÀà  »ñÈ¡ÊµÀıÖ»»ñÈ¡Ò»´Î
 		MetadataAwareAspectInstanceFactory lazySingletonAspectInstanceFactory =
 				new LazySingletonAspectInstanceFactoryDecorator(aspectInstanceFactory);
 
 		List<Advisor> advisors = new ArrayList<>();
-		//å¾ªç¯æ²¡æœ‰@PointCutæ³¨è§£çš„æ–¹æ³•
+		//Ñ­»·Ã»ÓĞ@PointCut×¢½âµÄ·½·¨
 		for (Method method : getAdvisorMethods(aspectClass)) {
 			// Prior to Spring Framework 5.2.7, advisors.size() was supplied as the declarationOrderInAspect
 			// to getAdvisor(...) to represent the "current position" in the declared methods list.
@@ -140,7 +140,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 			// discovered via reflection in order to support reliable advice ordering across JVM launches.
 			// Specifically, a value of 0 aligns with the default value used in
 			// AspectJPrecedenceComparator.getAspectDeclarationOrder(Advisor).
-			//è·å–Advisor  é‡è¦ç¨‹åº¦ 5é¢—æ˜Ÿ
+			//»ñÈ¡Advisor  ÖØÒª³Ì¶È 5¿ÅĞÇ
 			Advisor advisor = getAdvisor(method, lazySingletonAspectInstanceFactory, 0, aspectName);
 			if (advisor != null) {
 				advisors.add(advisor);
@@ -208,32 +208,32 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 			int declarationOrderInAspect, String aspectName) {
 
 		validate(aspectInstanceFactory.getAspectMetadata().getAspectClass());
-		//è·å–PointCutå¯¹è±¡ï¼Œä¸»è¦æ˜¯ä»æ³¨è§£ä¸­è·å– è¡¨è¾¾å¼
+		//»ñÈ¡PointCut¶ÔÏó£¬Ö÷ÒªÊÇ´Ó×¢½âÖĞ»ñÈ¡ ±í´ïÊ½
 		AspectJExpressionPointcut expressionPointcut = getPointcut(
 				candidateAdviceMethod, aspectInstanceFactory.getAspectMetadata().getAspectClass());
 		if (expressionPointcut == null) {
 			return null;
 		}
-		//åˆ›å»ºAdvisoråˆ‡é¢ç±»ï¼Œ ä¸€ä¸ªåˆ‡é¢ç±»ä¸­å¿…é¡»è¦æœ‰  pointcut å’Œ advice
-		//InstantiationModelAwarePointcutAdvisorImpl æ ¹æ®å…¶å®ç°å…³ç³»å¯ä»¥çŸ¥é“ æœ¬èº«å°±æ˜¯ä¸€ä¸ª Advisor
+		//´´½¨AdvisorÇĞÃæÀà£¬ Ò»¸öÇĞÃæÀàÖĞ±ØĞëÒªÓĞ  pointcut ºÍ advice
+		//InstantiationModelAwarePointcutAdvisorImpl ¸ù¾İÆäÊµÏÖ¹ØÏµ¿ÉÒÔÖªµÀ ±¾Éí¾ÍÊÇÒ»¸ö Advisor
 		return new InstantiationModelAwarePointcutAdvisorImpl(expressionPointcut, candidateAdviceMethod,
 				this, aspectInstanceFactory, declarationOrderInAspect, aspectName);
 	}
 
 	@Nullable
 	private AspectJExpressionPointcut getPointcut(Method candidateAdviceMethod, Class<?> candidateAspectClass) {
-		//ä»å€™é€‰çš„æ–¹æ³•ä¸­ æ‰¾æœ‰@Pointcut, @Around, @Before, @After, @AfterReturning, @AfterThrowingç­‰æ³¨è§£ï¼Œ
-		// å¹¶æŠŠæ³¨è§£ä¿¡æ¯å°è£…æˆAspectJAnnotationå¯¹è±¡
+		//´ÓºòÑ¡µÄ·½·¨ÖĞ ÕÒÓĞ@Pointcut, @Around, @Before, @After, @AfterReturning, @AfterThrowingµÈ×¢½â£¬
+		// ²¢°Ñ×¢½âĞÅÏ¢·â×°³ÉAspectJAnnotation¶ÔÏó
 		AspectJAnnotation<?> aspectJAnnotation =
 				AbstractAspectJAdvisorFactory.findAspectJAnnotationOnMethod(candidateAdviceMethod);
 		if (aspectJAnnotation == null) {
 			return null;
 		}
 
-		//åˆ›å»ºä¸€ä¸ªPointcut ç±»
+		//´´½¨Ò»¸öPointcut Àà
 		AspectJExpressionPointcut ajexp =
 				new AspectJExpressionPointcut(candidateAspectClass, new String[0], new Class<?>[0]);
-		//æŠŠä¸Šé¢æ³¨è§£ä¸­è·å–åˆ°çš„è¡¨è¾¾å¼è®¾ç½®è¿›å»ï¼Œè¿™æ—¶å€™è¡¨è¾¾å¼è¿˜åªæ˜¯ æœ‰@PointCutæ³¨è§£çš„æ–¹æ³•çš„æ–¹æ³•åï¼Œä¾‹å¦‚ï¼špc1()
+		//°ÑÉÏÃæ×¢½âÖĞ»ñÈ¡µ½µÄ±í´ïÊ½ÉèÖÃ½øÈ¥£¬ÕâÊ±ºò±í´ïÊ½»¹Ö»ÊÇ ÓĞ@PointCut×¢½âµÄ·½·¨µÄ·½·¨Ãû£¬ÀıÈç£ºpc1()
 		ajexp.setExpression(aspectJAnnotation.getPointcutExpression());
 		if (this.beanFactory != null) {
 			ajexp.setBeanFactory(this.beanFactory);
@@ -246,10 +246,10 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 	@Nullable
 	public Advice getAdvice(Method candidateAdviceMethod, AspectJExpressionPointcut expressionPointcut,
 			MetadataAwareAspectInstanceFactory aspectInstanceFactory, int declarationOrder, String aspectName) {
-		//è·å–æœ‰@Aspectjæ³¨è§£çš„ç±»
+		//»ñÈ¡ÓĞ@Aspectj×¢½âµÄÀà
 		Class<?> candidateAspectClass = aspectInstanceFactory.getAspectMetadata().getAspectClass();
 		validate(candidateAspectClass);
-		//æ‰¾åˆ°candidateAdviceMethodæ–¹æ³•ä¸Šçš„æ³¨è§£ï¼Œç„¶åå°è£…æˆAspectJAnnotationå¯¹è±¡
+		//ÕÒµ½candidateAdviceMethod·½·¨ÉÏµÄ×¢½â£¬È»ºó·â×°³ÉAspectJAnnotation¶ÔÏó
 		AspectJAnnotation<?> aspectJAnnotation =
 				AbstractAspectJAdvisorFactory.findAspectJAnnotationOnMethod(candidateAdviceMethod);
 		if (aspectJAnnotation == null) {
@@ -269,7 +269,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 		}
 
 		AbstractAspectJAdvice springAdvice;
-		//æ ¹æ®ä¸åŒçš„æ³¨è§£ç±»å‹ åˆ›å»ºä¸åŒçš„advice
+		//¸ù¾İ²»Í¬µÄ×¢½âÀàĞÍ ´´½¨²»Í¬µÄadvice
 		switch (aspectJAnnotation.getAnnotationType()) {
 			case AtPointcut:
 				if (logger.isDebugEnabled()) {
@@ -277,22 +277,22 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 				}
 				return null;
 			case AtAround:
-				//å®ç°äº† MethodInterceptor æ¥å£
+				//ÊµÏÖÁË MethodInterceptor ½Ó¿Ú
 				springAdvice = new AspectJAroundAdvice(
 						candidateAdviceMethod, expressionPointcut, aspectInstanceFactory);
 				break;
 			case AtBefore:
-				//å®ç°äº† MethodBeforeAdvice æ¥å£
+				//ÊµÏÖÁË MethodBeforeAdvice ½Ó¿Ú
 				springAdvice = new AspectJMethodBeforeAdvice(
 						candidateAdviceMethod, expressionPointcut, aspectInstanceFactory);
 				break;
 			case AtAfter:
-				//å®ç°äº† MethodInterceptoræ¥å£
+				//ÊµÏÖÁË MethodInterceptor½Ó¿Ú
 				springAdvice = new AspectJAfterAdvice(
 						candidateAdviceMethod, expressionPointcut, aspectInstanceFactory);
 				break;
 			case AtAfterReturning:
-				//å®ç°äº† AfterReturningAdviceæ¥å£
+				//ÊµÏÖÁË AfterReturningAdvice½Ó¿Ú
 				springAdvice = new AspectJAfterReturningAdvice(
 						candidateAdviceMethod, expressionPointcut, aspectInstanceFactory);
 				AfterReturning afterReturningAnnotation = (AfterReturning) aspectJAnnotation.getAnnotation();
@@ -301,7 +301,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 				}
 				break;
 			case AtAfterThrowing:
-				//å®ç°äº† MethodInterceptoræ¥å£
+				//ÊµÏÖÁË MethodInterceptor½Ó¿Ú
 				springAdvice = new AspectJAfterThrowingAdvice(
 						candidateAdviceMethod, expressionPointcut, aspectInstanceFactory);
 				AfterThrowing afterThrowingAnnotation = (AfterThrowing) aspectJAnnotation.getAnnotation();
@@ -321,7 +321,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 		if (argNames != null) {
 			springAdvice.setArgumentNamesFromStringArray(argNames);
 		}
-		//è®¡ç®—argNames å’Œ ç±»å‹çš„å¯¹åº”å…³ç³»
+		//¼ÆËãargNames ºÍ ÀàĞÍµÄ¶ÔÓ¦¹ØÏµ
 		springAdvice.calculateArgumentBindings();
 
 		return springAdvice;

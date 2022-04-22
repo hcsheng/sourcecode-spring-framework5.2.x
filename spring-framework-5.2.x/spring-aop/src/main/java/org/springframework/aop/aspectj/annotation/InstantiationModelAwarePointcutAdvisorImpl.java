@@ -110,7 +110,7 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 			// A singleton aspect.
 			this.pointcut = this.declaredPointcut;
 			this.lazy = false;
-			//åˆ›å»ºAdviceæ–¹æ³•ï¼Œé‡è¦ç¨‹åº¦ 5é¢—æ˜Ÿ
+			//´´½¨Advice·½·¨£¬ÖØÒª³Ì¶È 5¿ÅĞÇ
 			this.instantiatedAdvice = instantiateAdvice(this.declaredPointcut);
 		}
 	}
@@ -147,7 +147,7 @@ final class InstantiationModelAwarePointcutAdvisorImpl
 	}
 
 	private Advice instantiateAdvice(AspectJExpressionPointcut pointcut) {
-		//åˆ›å»ºaspectJAdviceMethod æ–¹æ³•çš„ advice
+		//´´½¨aspectJAdviceMethod ·½·¨µÄ advice
 		Advice advice = this.aspectJAdvisorFactory.getAdvice(this.aspectJAdviceMethod, pointcut,
 				this.aspectInstanceFactory, this.declarationOrder, this.aspectName);
 		return (advice != null ? advice : EMPTY_ADVICE);
