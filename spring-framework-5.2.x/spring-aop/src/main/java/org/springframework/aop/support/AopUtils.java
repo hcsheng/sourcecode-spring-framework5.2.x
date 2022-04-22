@@ -223,6 +223,7 @@ public abstract class AopUtils {
 	 */
 	public static boolean canApply(Pointcut pc, Class<?> targetClass, boolean hasIntroductions) {
 		Assert.notNull(pc, "Pointcut must not be null");
+		//pc就是 pointcut 调用classFilter的match方法 判断类是否匹配   进入 AspectJExpressionPointcut 的 matches方法
 		if (!pc.getClassFilter().matches(targetClass)) {
 			return false;
 		}
@@ -308,11 +309,13 @@ public abstract class AopUtils {
 		}
 		List<Advisor> eligibleAdvisors = new ArrayList<>();
 		for (Advisor candidate : candidateAdvisors) {
+			// 如果是 引介切面并且匹配   重要程度 1颗星
 			if (candidate instanceof IntroductionAdvisor && canApply(candidate, clazz)) {
 				eligibleAdvisors.add(candidate);
 			}
 		}
 		boolean hasIntroductions = !eligibleAdvisors.isEmpty();
+		//调用 pointcut 中 classFilter  和 methidMatcher 的 match 方法的过程
 		for (Advisor candidate : candidateAdvisors) {
 			if (candidate instanceof IntroductionAdvisor) {
 				// already processed
