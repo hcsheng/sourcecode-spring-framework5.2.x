@@ -269,11 +269,11 @@ public class AspectJExpressionPointcut extends AbstractExpressionPointcut
 
 	@Override
 	public boolean matches(Class<?> targetClass) {
-		//????@Around("pc1()") ?????Ğµ? pc1???pc1()?????? ???????????pointCut?????  ?????????????é·³????????2????
+		//»á¸ù¾İ @Around("pc1()") ÅäÖÃÖĞµÄpc1 ÕÒµ½pc1 ·½·¨´Ó¶øÕÒµ½ÕæÕıµÄ pointcut ±í´ïÊ½
 		PointcutExpression pointcutExpression = obtainPointcutExpression();
 		try {
 			try {
-				//åŒ¹é…targetClass æ˜¯å¦åœ¨è¡¨è¾¾å¼ä¸­
+				//Æ¥ÅätargetClass ÊÇ·ñÔÚ±í´ïÊ½ÖĞ
 				return pointcutExpression.couldMatchJoinPointsInType(targetClass);
 			}
 			catch (ReflectionWorldException ex) {
