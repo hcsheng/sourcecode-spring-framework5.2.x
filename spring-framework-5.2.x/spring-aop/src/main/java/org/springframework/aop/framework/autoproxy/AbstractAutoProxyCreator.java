@@ -353,6 +353,7 @@ public abstract class AbstractAutoProxyCreator extends ProxyProcessorSupport
 			Object proxy = createProxy(
 					bean.getClass(), beanName, specificInterceptors, new SingletonTargetSource(bean));
 			this.proxyTypes.put(cacheKey, proxy.getClass());
+			//返回当前类的代理对象， 所以一级缓存中存储的就是 代理对象
 			return proxy;
 		}
 

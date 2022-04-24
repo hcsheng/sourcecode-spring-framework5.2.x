@@ -107,7 +107,7 @@ public class BeanFactoryAspectJAdvisorsBuilder {
 							aspectNames.add(beanName);
 							AspectMetadata amd = new AspectMetadata(beanType, beanName);
 							if (amd.getAjType().getPerClause().getKind() == PerClauseKind.SINGLETON) {
-								//创建获取有@Aspect注解类的实例工厂，负责获取有@Aspect注解类的实例
+								//创建获取有@Aspect注解类的实例工厂，负责获取有@Aspect注解类的实例 
 								MetadataAwareAspectInstanceFactory factory =
 										new BeanFactoryAspectInstanceFactory(this.beanFactory, beanName);
 								//创建切面advisor对象
@@ -143,6 +143,8 @@ public class BeanFactoryAspectJAdvisorsBuilder {
 			return Collections.emptyList();
 		}
 		List<Advisor> advisors = new ArrayList<>();
+		// 由于 aspectNames 是 volatile，对其他线程具有可见性
+		//当其他类再次进入时，如果 aspectNames不为空，则会走缓存判断 
 		for (String aspectName : aspectNames) {
 			List<Advisor> cachedAdvisors = this.advisorsCache.get(aspectName);
 			if (cachedAdvisors != null) {
