@@ -501,6 +501,9 @@ public abstract class AbstractAutowireCapableBeanFactory extends AbstractBeanFac
 		}
 
 		try {
+			//TargetSource接口运用，可以用在改一个类实现该接口，然后在里面定义实例化对象的方式  然后返回
+			//也就说说不需要spring帮助我们实例化对象
+			//这里可以返回实例本身   重要程度 2颗星
 			// Give BeanPostProcessors a chance to return a proxy instead of the target bean instance.
 			Object bean = resolveBeforeInstantiation(beanName, mbdToUse);
 			if (bean != null) {

@@ -130,7 +130,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 				new LazySingletonAspectInstanceFactoryDecorator(aspectInstanceFactory);
 
 		List<Advisor> advisors = new ArrayList<>();
-		//循环没有@PointCut注解的方法
+		//循环没有@PointCut注解的方法 对方法按照注解优先级规则进行排序
 		for (Method method : getAdvisorMethods(aspectClass)) {
 			// Prior to Spring Framework 5.2.7, advisors.size() was supplied as the declarationOrderInAspect
 			// to getAdvisor(...) to represent the "current position" in the declared methods list.
@@ -173,6 +173,7 @@ public class ReflectiveAspectJAdvisorFactory extends AbstractAspectJAdvisorFacto
 			}
 		}, ReflectionUtils.USER_DECLARED_METHODS);
 		if (methods.size() > 1) {
+			//注解方式排序规则：Around.class, Before.class, After.class, AfterReturning.class, AfterThrowing.class
 			methods.sort(METHOD_COMPARATOR);
 		}
 		return methods;
